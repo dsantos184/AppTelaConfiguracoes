@@ -27,7 +27,7 @@ export default class App extends Component {
                 nome: '',
                 dataNasc:
                 {
-                    dia:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+                    dia:["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26",'27',"28","29","30","31"],
                     mes: [
                         'Janeiro', 
                         'Fevereiro',
@@ -59,12 +59,20 @@ export default class App extends Component {
     }
 
     render() {
+        
+        const { dataNasc } = this.state.dadosPessoais;
 
-        const teste = this.state.dadosPessoais.dataNasc.dia.map((dia, key)=>{
+        const PickerDiaNasc = dataNasc.dia.map((dia, key)=>{
             return(
-                <Picker.Item key={key}  value={dia} label={dia}/>
+                <Picker.Item key={key.toString()}  value={dia} label={dia}/>
             )
-        })
+        });
+
+        const pickerMesNasc = dataNasc.mes.map((mes, key)=>{
+            return(
+                <Picker.Item key={key.toString()} value={mes} label={mes} />
+            )
+        });
 
         return (
             <View style={styles.container}>
@@ -87,10 +95,19 @@ export default class App extends Component {
                         <Text style={styles.label}>Data Nasc.:</Text>
                     </View>
 
-                    <View style={[styles.containerInput]}>
-                        <Picker onValueChange={()=>{}}>
-                            <Picker.Item label={1} value={1} />
+                    <View style={[styles.containerInput, styles.containerDtNasc]}>
+                    
+                        <Text style={[styles.label, styles.labelDiaNasc]}>Dia:</Text>
+
+                        <Picker onValueChange={()=>{}} style={[styles.picker, styles.diaNasc]}>
+                            {PickerDiaNasc}
                         </Picker>
+
+                        <Text style={[styles.label, styles.labelMesNasc]}>Mes:</Text>
+                        <Picker onValueChange={()=>{}} style={[styles.picker, styles.mesNasc]}>
+                            {pickerMesNasc}
+                        </Picker>
+
                     </View>
 
                 </View>
@@ -123,5 +140,32 @@ const styles = StyleSheet.create({
   containerInput:
   {
     flex: 3
-  },  
+  },
+
+  containerDtNasc:
+  {
+    flexDirection: 'row',
+  },
+  
+  labelDiaNasc:
+  {
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-end',
+  },
+
+  diaNasc:
+  {
+    flex: 2,
+  },
+
+  labelMesNasc:
+  {
+    flex: 1,
+  },
+
+  mesNasc:
+  {
+    flex: 5,
+  },
 });
