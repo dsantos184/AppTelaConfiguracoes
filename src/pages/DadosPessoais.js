@@ -39,7 +39,7 @@ export default class App extends Component {
                     ano: '',
                 },
                 sexo: '',
-                altura: '',
+                altura: 1,
                 peso: '',
                 doador: true,
                 selectedDtNasc:
@@ -54,6 +54,7 @@ export default class App extends Component {
         this.selectDiaNasc = this.selectDiaNasc.bind(this);
         this.selectMesNasc = this.selectMesNasc.bind(this);
         this.selectSexo = this.selectSexo.bind(this);
+        this.selectAltura = this.selectAltura.bind(this);
     }
 
     selectDiaNasc(dia)
@@ -77,6 +78,13 @@ export default class App extends Component {
     {
         let s = this.state.dadosPessoais
         s.sexo = sexo;
+        this.setState(s);
+    }
+
+    selectAltura(altura)
+    {
+        let s = this.state.dadosPessoais
+        s.altura = altura;
         this.setState(s);
     }
 
@@ -136,24 +144,46 @@ export default class App extends Component {
                             placeholder="Ano"                            
                         />
                     </View>
+                   
                 </View>
-                
                 <View style={styles.containerLabelDataNasc}>
                     <Text style={[styles.label, styles.labelDataNasc]}>Data Nasc:</Text>
                 </View>
+                
 
                 <View style={styles.containerLineForm}>
                     
                     <View style={styles.containerLabel}>
-                        <Text style={styles.label}>sexo:</Text>
+                        <Text style={styles.label}>Sexo:</Text>
                     </View>
                     
-                    <Picker
-                        selectedValue={this.state.dadosPessoais.sexo}
-                        onValueChange={(value)=>this.selectSexo(value)}
-                    >
-                    
-                    </Picker>
+                    <View style={styles.containerPickerSexo}>
+                        <Picker
+                            selectedValue={this.state.dadosPessoais.sexo}
+                            onValueChange={(value)=>this.selectSexo(value)}
+                        >
+                            <Picker.Item key="M" value="M" label="M" />
+                            <Picker.Item key="F" value="F" label="F" />
+                        </Picker>
+                    </View>
+
+                </View>
+
+                <View style={styles.containerLineForm}>
+                
+                    <View style={styles.containerLabel}>
+                        <Text style={styles.label}>Altura:</Text>
+                    </View>
+
+                    <View style={styles.sliderAltura}>
+                        <Slider
+                            value={this.state.dadosPessoais.altura}
+                            onValueChange={(value)=>this.selectAltura(value)}
+                            maximumValue={3}
+                            minimumValue={1}
+                        />
+                        <Text>{this.state.dadosPessoais.altura.toFixed(2)}m</Text>
+                    </View>
                 </View>
 
             </View>
@@ -172,7 +202,6 @@ const styles = StyleSheet.create({
   {
     flexDirection: 'row',
     height: 40,
-   
   },
 
   containerLabel:
@@ -228,9 +257,22 @@ const styles = StyleSheet.create({
   {
     marginTop: -30,
     marginLeft: 10,
+    marginBottom: 50,
     zIndex: 0,
     backgroundColor: "#FFFFFF",
     alignItems: 'center',
     width: 80,
-  },    
+  },
+
+  containerPickerSexo:
+  {
+    flex: 1,
+  },
+
+  sliderAltura:
+  {
+    flex: 1,
+  }
+
+
 });
