@@ -5,7 +5,8 @@ import {
   View,
   TextInput,
   Picker,
-  Slider
+  Slider,
+  Switch,
 } from 'react-native';
 
 
@@ -55,6 +56,7 @@ export default class App extends Component {
         this.selectMesNasc = this.selectMesNasc.bind(this);
         this.selectSexo = this.selectSexo.bind(this);
         this.selectAltura = this.selectAltura.bind(this);
+        this.selectDoador = this.selectDoador.bind(this);
     }
 
     selectDiaNasc(dia)
@@ -85,6 +87,15 @@ export default class App extends Component {
     {
         let s = this.state.dadosPessoais
         s.altura = altura;
+        this.setState(s);
+    }
+
+    selectDoador(value)
+    {
+        alert(value);
+        
+        let s = this.state.dadosPessoais
+        s.doador = value;
         this.setState(s);
     }
 
@@ -157,7 +168,7 @@ export default class App extends Component {
                         <Text style={styles.label}>Sexo:</Text>
                     </View>
                     
-                    <View style={styles.containerPickerSexo}>
+                    <View style={[styles.containerPickerSexo, styles.containerInput]}>
                         <Picker
                             selectedValue={this.state.dadosPessoais.sexo}
                             onValueChange={(value)=>this.selectSexo(value)}
@@ -175,7 +186,7 @@ export default class App extends Component {
                         <Text style={styles.label}>Altura:</Text>
                     </View>
 
-                    <View style={styles.sliderAltura}>
+                    <View style={[styles.sliderAltura, styles.containerInput]}>
                         <Slider
                             value={this.state.dadosPessoais.altura}
                             onValueChange={(value)=>this.selectAltura(value)}
@@ -183,6 +194,21 @@ export default class App extends Component {
                             minimumValue={1}
                         />
                         <Text>{this.state.dadosPessoais.altura.toFixed(2)}m</Text>
+                    </View>
+                </View>
+
+                 <View style={styles.containerLineForm}>
+                
+                    <View style={styles.containerLabel}>
+                        <Text style={styles.label}>Dodador:</Text>
+                    </View>
+
+                    <View style={[styles.sliderAltura, styles.containerInput]}>
+                       <Switch 
+                            value={this.state.dadosPessoais.doador}
+                            OnValueChange={(value)=>this.selectDoador(value)}
+                       />
+                       <Text>{this.state.dadosPessoais.doador}</Text>
                     </View>
                 </View>
 
@@ -202,6 +228,7 @@ const styles = StyleSheet.create({
   {
     flexDirection: 'row',
     height: 40,
+    marginTop: 20,
   },
 
   containerLabel:
